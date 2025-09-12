@@ -6,11 +6,11 @@ app = Flask(__name__)
 
 # Disciplinas e seus preços
 courses = {
-    "Algoritmos": 100,
-    "Python": 120,
-    "Java": 130,
-    "DOS": 80,
-    "Fortran": 90,
+    "História dos Algoritmos": 100,
+    "História da Codificação" : 120,
+    " História das Linguagens de Programação" : 130,
+    "História da Eletrônica": 80,
+    "História da Engenharia": 90,
     "História dos Computadores": 110,
     "História das Máquinas de Calcular": 85,
     "História dos Cálculos": 95,
