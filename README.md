@@ -1,220 +1,304 @@
-# tatianalisson.github.io
-Site Interface Relacionamento Cliente 
-from flask import Flask, render_template, request, jsonify
-
-app = Flask(__name__)
-
-# Disciplinas e seus preços
-courses = {
-    "História dos Algoritmos": 100,
-    "História da Codificação" : 120,
-    " História das Linguagens de Programação" : 130,
-    "História da Eletrônica": 80,
-    "História da Engenharia": 90,
-    "História dos Computadores": 110,
-    "História das Máquinas de Calcular": 85,
-    "História dos Cálculos": 95,
-}
-
-@app.route('/')
-def index():
-    return render_template('index.html', courses=courses)
-
-@app.route('/process_payment', methods=['POST'])
-def process_payment():
-    data = request.json
-    selected_courses = data.get('selected_courses', [])
-    card_number = data.get('card_number', '')
-    if not selected_courses or not card_number:
-        return jsonify({'success': False, 'message': 'Selecione pelo menos uma disciplina e informe o número do cartão.'})
-    # Aqui poderia ser implementado processamento real de pagamento
-    return jsonify({'success': True, 'message': 'Pagamento realizado com sucesso!', 'selected_courses': selected_courses})
-
-if __name__ == '__main__':
-    app.run(debug=True)
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <title>Microempresa - Cursos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            display: flex;
-        }
-        #menu {
-            width: 250px;
-            background: #f0f0f0;
-            height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-            border-right: 1px solid #ccc;
-        }
-        #menu button {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: none;
-            background: #ddd;
-            cursor: pointer;
-            text-align: left;
-            font-size: 16px;
-        }
-        #menu button.active {
-            background: #bbb;
-        }
-        #content {
-            flex-grow: 1;
-            padding: 20px;
-        }
-        #cart {
-            margin-top: 20px;
-            border-top: 1px solid #ccc;
-            padding-top: 10px;
-        }
-        label {
-            margin-right: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Basson Aulas de Computação</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fffacd; /* amarelo claro */
+      display: flex;
+      height: 100vh;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #fffacd;
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: black;
+      padding: 15px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    nav {
+      background-color: #fffacd;
+      padding-top: 90px; /* para descer abaixo do header */
+      width: 180px;
+      box-shadow: 1px 0 5px rgba(0,0,0,0.1);
+      height: 100vh;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      border-left: 5px solid transparent;
+      transition: all 0.3s ease;
+    }
+    nav a:hover, nav a:focus {
+      background-color: #f0e68c; /* tom amarelo mais escuro */
+      border-left-color: black;
+      outline: none;
+    }
+    main {
+      margin-left: 180px;
+      padding: 110px 20px 20px 20px;
+      flex: 1;
+    }
+  </style>
 </head>
 <body>
-    <div id="menu">
-        <h3>Disciplinas</h3>
-        {% for course, price in courses.items() %}
-            <button data-course="{{ course }}" data-price="{{ price }}">{{ course }} - R$ {{ price }}</button>
-        {% endfor %}
-    </div>
-
-    <div id="content">
-        <h2>Selecione a disciplina</h2>
-        <div id="selection" style="margin-bottom: 20px;"></div>
-
-        <div id="cart">
-            <h3>Carrinho de Compras</h3>
-            <ul id="cart-list"></ul>
-
-            <label><input type="checkbox" id="finalize-check" /> Finalizar Compra</label>
-            <div id="payment-section" style="display:none; margin-top:10px;">
-                <label for="card-number">Número do Cartão:</label>
-                <select id="card-number">
-                    <option value="">Selecione o cartão</option>
-                    <option value="1234 5678 9012 3456">1234 5678 9012 3456</option>
-                    <option value="9876 5432 1098 7654">9876 5432 1098 7654</option>
-                </select>
-                <button id="pay-btn">Pagar</button>
-            </div>
-            <div id="message" style="margin-top:10px; color:green;"></div>
-        </div>
-    </div>
-
-    <script>
-        const menuButtons = document.querySelectorAll('#menu button');
-        const selectionDiv = document.getElementById('selection');
-        const cartList = document.getElementById('cart-list');
-        const finalizeCheck = document.getElementById('finalize-check');
-        const paymentSection = document.getElementById('payment-section');
-        const payBtn = document.getElementById('pay-btn');
-        const cardNumberSelect = document.getElementById('card-number');
-        const messageDiv = document.getElementById('message');
-
-        let selectedCourse = null;
-        let cart = [];
-
-        menuButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                menuButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                selectedCourse = btn.getAttribute('data-course');
-                const price = btn.getAttribute('data-price');
-                showSelection(selectedCourse, price);
-                messageDiv.textContent = '';
-            });
-        });
-
-        function showSelection(course, price) {
-            selectionDiv.innerHTML = `
-                <p>${course} - R$ ${price}</p>
-                <label><input type="radio" name="select-course" value="sim"> Sim</label>
-                <label><input type="radio" name="select-course" value="nao" checked> Não</label>
-            `;
-            const radios = document.getElementsByName('select-course');
-            radios.forEach(radio => {
-                radio.addEventListener('change', (e) => {
-                    if(e.target.value === 'sim') {
-                        addToCart(course, price);
-                    } else {
-                        removeFromCart(course);
-                    }
-                });
-            });
-        }
-
-        function addToCart(course, price) {
-            if (!cart.find(item => item.course === course)) {
-                cart.push({course, price: Number(price)});
-                updateCart();
-            }
-        }
-
-        function removeFromCart(course) {
-            cart = cart.filter(item => item.course !== course);
-            updateCart();
-        }
-
-        function updateCart() {
-            cartList.innerHTML = '';
-            if (cart.length === 0) {
-                cartList.innerHTML = '<li>O carrinho está vazio.</li>';
-            } else {
-                cart.forEach(item => {
-                    let li = document.createElement('li');
-                    li.textContent = `${item.course} - R$ ${item.price}`;
-                    cartList.appendChild(li);
-                });
-            }
-        }
-
-        finalizeCheck.addEventListener('change', () => {
-            paymentSection.style.display = finalizeCheck.checked ? 'block' : 'none';
-            messageDiv.textContent = '';
-        });
-
-        payBtn.addEventListener('click', () => {
-            if(cart.length === 0) {
-                alert('Adicione pelo menos uma disciplina ao carrinho!');
-                return;
-            }
-            if(!cardNumberSelect.value) {
-                alert('Selecione o número do cartão!');
-                return;
-            }
-            fetch('/process_payment', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    selected_courses: cart,
-                    card_number: cardNumberSelect.value
-                })
-            })
-            .then(resp => resp.json())
-            .then(data => {
-                if(data.success) {
-                    messageDiv.style.color = 'green';
-                    messageDiv.textContent = data.message;
-                    cart = [];
-                    updateCart();
-                    finalizeCheck.checked = false;
-                    paymentSection.style.display = 'none';
-                } else {
-                    messageDiv.style.color = 'red';
-                    messageDiv.textContent = data.message;
-                }
-            });
-        });
-
-        updateCart();
-    </script>
+  <header>Basson Aulas de Computação</header>
+  <nav>
+    <a href="cadastro.html">Cadastro</a>
+    <a href="disciplinas.html">Disciplinas</a>
+  </nav>
+  <main>
+    <h2>Bem-vindo à Basson Aulas de Computação</h2>
+    <p>Use o menu à esquerda para navegar pelo site.</p>
+  </main>
+</body>
+</html>
+<!-- cadastro.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro - Basson Aulas de Computação</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fffacd;
+      display: flex;
+      height: 100vh;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #fffacd;
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: black;
+      padding: 15px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    nav {
+      background-color: #fffacd;
+      padding-top: 90px;
+      width: 180px;
+      box-shadow: 1px 0 5px rgba(0,0,0,0.1);
+      height: 100vh;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      border-left: 5px solid transparent;
+      transition: all 0.3s ease;
+    }
+    nav a:hover, nav a:focus {
+      background-color: #f0e68c;
+      border-left-color: black;
+      outline: none;
+    }
+    nav a[href="cadastro.html"] {
+      border-left-color: black;
+      background-color: #f0e68c;
+    }
+    main {
+      margin-left: 180px;
+      padding: 110px 20px 20px 20px;
+      flex: 1;
+    }
+    form {
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="tel"], select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #999;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      font-weight: bold;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>Basson Aulas de Computação</header>
+  <nav>
+    <a href="cadastro.html">Cadastro</a>
+    <a href="disciplinas.html">Disciplinas</a>
+  </nav>
+  <main>
+    <h2>Cadastro de Usuário</h2>
+    <form action="#" method="post">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required />
+      
+      <label for="endereco">Endereço:</label>
+      <input type="text" id="endereco" name="endereco" required />
+      
+      <label for="telefone">Telefone de Contato:</label>
+      <input type="tel" id="telefone" name="telefone" required pattern="[0-9s-+()]{7,}" placeholder="Apenas números e símbolos + - ( )" />
+      
+      <label for="disciplina">Preferência por Disciplina:</label>
+      <select id="disciplina" name="disciplina" required>
+        <option value="">Selecione uma disciplina</option>
+        <option value="calcular">História das máquinas de Calcular</option>
+        <option value="calculo">História do cálculo</option>
+        <option value="programacao">História da programação</option>
+        <option value="computadores">História dos computadores</option>
+        <option value="linux">História do sistema operacional Linux</option>
+        <option value="circuitos">História dos circuitos eletrônicos</option>
+        <option value="windows">História do sistema operacional Windows</option>
+        <option value="escolas">História de algumas escolas de desenvolvimento para a Informática</option>
+      </select>
+      
+      <button type="submit">Cadastrar</button>
+    </form>
+  </main>
+</body>
+</html>
+<!-- disciplinas.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Disciplinas - Basson Aulas de Computação</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fffacd;
+      display: flex;
+      height: 100vh;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #fffacd;
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: black;
+      padding: 15px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    nav {
+      background-color: #fffacd;
+      padding-top: 90px;
+      width: 180px;
+      box-shadow: 1px 0 5px rgba(0,0,0,0.1);
+      height: 100vh;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      border-left: 5px solid transparent;
+      transition: all 0.3s ease;
+    }
+    nav a:hover, nav a:focus {
+      background-color: #f0e68c;
+      border-left-color: black;
+      outline: none;
+    }
+    nav a[href="disciplinas.html"] {
+      border-left-color: black;
+      background-color: #f0e68c;
+    }
+    main {
+      margin-left: 180px;
+      padding: 110px 20px 20px 20px;
+      flex: 1;
+    }
+    ol {
+      background: #fff;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 600px;
+    }
+    ol li {
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <header>Basson Aulas de Computação</header>
+  <nav>
+    <a href="cadastro.html">Cadastro</a>
+    <a href="disciplinas.html">Disciplinas</a>
+  </nav>
+  <main>
+    <h2>Disciplinas</h2>
+    <ol>
+      <li>História das máquinas de Calcular</li>
+      <li>História do cálculo</li>
+      <li>História da programação</li>
+      <li>História dos computadores</li>
+      <li>História do sistema operacional Linux</li>
+      <li>História dos circuitos eletrônicos</li>
+      <li>História do sistema operacional Windows</li>
+      <li>História de algumas escolas de desenvolvimento para a Informática</li>
+    </ol>
+  </main>
 </body>
 </html>
