@@ -1,304 +1,197 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Basson Aulas de Computação</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #fffacd; /* amarelo claro */
-      display: flex;
-      height: 100vh;
-    }
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #fffacd;
-      text-align: center;
-      font-size: 2.5em;
-      font-weight: bold;
-      color: black;
-      padding: 15px 0;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-    nav {
-      background-color: #fffacd;
-      padding-top: 90px; /* para descer abaixo do header */
-      width: 180px;
-      box-shadow: 1px 0 5px rgba(0,0,0,0.1);
-      height: 100vh;
-      box-sizing: border-box;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    nav a {
-      display: block;
-      padding: 15px 20px;
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
-      border-left: 5px solid transparent;
-      transition: all 0.3s ease;
-    }
-    nav a:hover, nav a:focus {
-      background-color: #f0e68c; /* tom amarelo mais escuro */
-      border-left-color: black;
-      outline: none;
-    }
-    main {
-      margin-left: 180px;
-      padding: 110px 20px 20px 20px;
-      flex: 1;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Basson Aulas de Computação</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #fff9b1; /* amarelo claro */
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  header {
+    background: transparent;
+    text-align: center;
+    padding: 20px 0;
+    color: black;
+    font-weight: bold;
+    font-size: 2em;
+    user-select: none;
+  }
+  main {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+  nav {
+    background: #ffe766;
+    width: 250px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    overflow-y: auto;
+  }
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  nav li {
+    border-bottom: 1px solid #ddd;
+  }
+  nav button {
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 1em;
+    cursor: pointer;
+    color: #333;
+    transition: background-color 0.3s ease;
+    outline-offset: -2px;
+  }
+  nav button:hover,
+  nav button:focus {
+    background-color: #fff176;
+  }
+  nav button.active {
+    background-color: #ffd54f;
+    font-weight: bold;
+  }
+  section.content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: white;
+  }
+  h2 {
+    margin-top: 0;
+    color: #333;
+  }
+  p {
+    line-height: 1.5;
+    color: #444;
+  }
+</style>
 </head>
 <body>
-  <header>Basson Aulas de Computação</header>
+
+<header>Basson Aulas de Computação</header>
+
+<main>
   <nav>
-    <a href="cadastro.html">Cadastro</a>
-    <a href="disciplinas.html">Disciplinas</a>
+    <ul>
+      <li><button aria-controls="tab1" class="active">História das Máquinas de Calcular</button></li>
+      <li><button aria-controls="tab2">História do Cálculo</button></li>
+      <li><button aria-controls="tab3">História da Programação</button></li>
+      <li><button aria-controls="tab4">História dos Computadores</button></li>
+      <li><button aria-controls="tab5">História do Sistema Operacional Linux</button></li>
+      <li><button aria-controls="tab6">História dos Circuitos Eletrônicos</button></li>
+      <li><button aria-controls="tab7">História do Sistema Operacional Windows</button></li>
+      <li><button aria-controls="tab8">História das empresas Apple e Microsoft</button></li>
+    </ul>
   </nav>
-  <main>
-    <h2>Bem-vindo à Basson Aulas de Computação</h2>
-    <p>Use o menu à esquerda para navegar pelo site.</p>
-  </main>
-</body>
-</html>
-<!-- cadastro.html -->
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cadastro - Basson Aulas de Computação</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #fffacd;
-      display: flex;
-      height: 100vh;
-    }
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #fffacd;
-      text-align: center;
-      font-size: 2.5em;
-      font-weight: bold;
-      color: black;
-      padding: 15px 0;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-    nav {
-      background-color: #fffacd;
-      padding-top: 90px;
-      width: 180px;
-      box-shadow: 1px 0 5px rgba(0,0,0,0.1);
-      height: 100vh;
-      box-sizing: border-box;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    nav a {
-      display: block;
-      padding: 15px 20px;
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
-      border-left: 5px solid transparent;
-      transition: all 0.3s ease;
-    }
-    nav a:hover, nav a:focus {
-      background-color: #f0e68c;
-      border-left-color: black;
-      outline: none;
-    }
-    nav a[href="cadastro.html"] {
-      border-left-color: black;
-      background-color: #f0e68c;
-    }
-    main {
-      margin-left: 180px;
-      padding: 110px 20px 20px 20px;
-      flex: 1;
-    }
-    form {
-      max-width: 400px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 6px;
-      box-shadow: 0 0 10px #ccc;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input[type="text"], input[type="tel"], select {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-      margin-top: 5px;
-      border-radius: 4px;
-      border: 1px solid #999;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 15px;
-      font-weight: bold;
-      background-color: black;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #333;
-    }
-  </style>
-</head>
-<body>
-  <header>Basson Aulas de Computação</header>
-  <nav>
-    <a href="cadastro.html">Cadastro</a>
-    <a href="disciplinas.html">Disciplinas</a>
-  </nav>
-  <main>
-    <h2>Cadastro de Usuário</h2>
-    <form action="#" method="post">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" name="nome" required />
-      
-      <label for="endereco">Endereço:</label>
-      <input type="text" id="endereco" name="endereco" required />
-      
-      <label for="telefone">Telefone de Contato:</label>
-      <input type="tel" id="telefone" name="telefone" required pattern="[0-9s-+()]{7,}" placeholder="Apenas números e símbolos + - ( )" />
-      
-      <label for="disciplina">Preferência por Disciplina:</label>
-      <select id="disciplina" name="disciplina" required>
-        <option value="">Selecione uma disciplina</option>
-        <option value="calcular">História das máquinas de Calcular</option>
-        <option value="calculo">História do cálculo</option>
-        <option value="programacao">História da programação</option>
-        <option value="computadores">História dos computadores</option>
-        <option value="linux">História do sistema operacional Linux</option>
-        <option value="circuitos">História dos circuitos eletrônicos</option>
-        <option value="windows">História do sistema operacional Windows</option>
-        <option value="escolas">História de algumas escolas de desenvolvimento para a Informática</option>
-      </select>
-      
-      <button type="submit">Cadastrar</button>
-    </form>
-  </main>
-</body>
-</html>
-<!-- disciplinas.html -->
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Disciplinas - Basson Aulas de Computação</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #fffacd;
-      display: flex;
-      height: 100vh;
-    }
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #fffacd;
-      text-align: center;
-      font-size: 2.5em;
-      font-weight: bold;
-      color: black;
-      padding: 15px 0;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-    nav {
-      background-color: #fffacd;
-      padding-top: 90px;
-      width: 180px;
-      box-shadow: 1px 0 5px rgba(0,0,0,0.1);
-      height: 100vh;
-      box-sizing: border-box;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    nav a {
-      display: block;
-      padding: 15px 20px;
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
-      border-left: 5px solid transparent;
-      transition: all 0.3s ease;
-    }
-    nav a:hover, nav a:focus {
-      background-color: #f0e68c;
-      border-left-color: black;
-      outline: none;
-    }
-    nav a[href="disciplinas.html"] {
-      border-left-color: black;
-      background-color: #f0e68c;
-    }
-    main {
-      margin-left: 180px;
-      padding: 110px 20px 20px 20px;
-      flex: 1;
-    }
-    ol {
-      background: #fff;
-      padding: 20px;
-      border-radius: 6px;
-      box-shadow: 0 0 10px #ccc;
-      max-width: 600px;
-    }
-    ol li {
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-  </style>
-</head>
-<body>
-  <header>Basson Aulas de Computação</header>
-  <nav>
-    <a href="cadastro.html">Cadastro</a>
-    <a href="disciplinas.html">Disciplinas</a>
-  </nav>
-  <main>
-    <h2>Disciplinas</h2>
-    <ol>
-      <li>História das máquinas de Calcular</li>
-      <li>História do cálculo</li>
-      <li>História da programação</li>
-      <li>História dos computadores</li>
-      <li>História do sistema operacional Linux</li>
-      <li>História dos circuitos eletrônicos</li>
-      <li>História do sistema operacional Windows</li>
-      <li>História de algumas escolas de desenvolvimento para a Informática</li>
-    </ol>
-  </main>
+
+  <section class="content" id="tab1" role="tabpanel">
+    <h2>História das Máquinas de Calcular</h2>
+    <p>
+      As máquinas de calcular surgiram como ferramentas mecânicas criadas para facilitar operações aritméticas básicas. 
+      Um marco inicial foi a criação da régua de cálculo no século XVII, usada até o século XX. 
+      Blaise Pascal desenvolveu em 1642 a Pascalina, considerada uma das primeiras calculadoras mecânicas.
+      Depois dela, Antonio de Torres e Gottfried Wilhelm Leibniz aprimoraram as máquinas para somar, subtrair, multiplicar e dividir automaticamente.
+      Essas invenções foram fundamentais para o desenvolvimento posterior dos computadores digitais.
+    </p>
+  </section>
+
+  <section class="content" id="tab2" role="tabpanel" hidden>
+    <h2>História do Cálculo</h2>
+    <p>
+      O cálculo matemático é uma área que teve grande desenvolvimento com Isaac Newton e Gottfried Leibniz no século XVII, independentemente e quase simultaneamente, 
+      estabelecendo as bases do cálculo diferencial e integral. 
+      Essa ciência permitiu o avanço em diversas áreas da física, engenharia e economia.
+      O cálculo possibilitou modelar e resolver problemas envolvendo taxas de variação e acumulação, essenciais para a tecnologia e computação modernas.
+    </p>
+  </section>
+
+  <section class="content" id="tab3" role="tabpanel" hidden>
+    <h2>História da Programação</h2>
+    <p>
+      A programação começou com linguagens muito simples, como o código de máquina e assembly. 
+      Ada Lovelace, reconhecida como a primeira programadora, desenvolveu algoritmos para a Máquina Analítica de Charles Babbage no século XIX.
+      Com o avanço dos computadores eletrônicos na década de 1940, surgiram linguagens como Fortran e COBOL, que facilitaram o desenvolvimento de software.
+      Hoje, linguagens modernas como Python e Java dominam, com foco em eficiência e facilidade de uso.
+    </p>
+  </section>
+
+  <section class="content" id="tab4" role="tabpanel" hidden>
+    <h2>História dos Computadores</h2>
+    <p>
+      Os primeiros computadores eram máquinas enormes feitas de componentes eletromecânicos. O ENIAC, criado em 1945, é considerado o primeiro computador eletrônico digital.
+      A evolução seguiu com os computadores de válvulas, depois transistores e, finalmente, circuitos integrados a partir dos anos 60, levando aos microprocessadores.
+      Essa rápida evolução transformou os computadores em dispositivos pessoais essenciais para trabalho, estudo e lazer.
+    </p>
+  </section>
+
+  <section class="content" id="tab5" role="tabpanel" hidden>
+    <h2>História do Sistema Operacional Linux</h2>
+    <p>
+      Desenvolvido por Linus Torvalds em 1991, o Linux é um sistema operacional de código aberto baseado no Unix.
+      O Linux cresceu rapidamente devido à sua flexibilidade, estabilidade e custo zero, tornando-se popular em servidores, dispositivos embarcados e desktops.
+      Distribuições como Ubuntu e Fedora tornaram o sistema acessível para usuários comuns e profissionais.
+    </p>
+  </section>
+
+  <section class="content" id="tab6" role="tabpanel" hidden>
+    <h2>História dos Circuitos Eletrônicos</h2>
+    <p>
+      Os circuitos eletrônicos têm suas raízes no desenvolvimento do diodo e transistor no século XX.
+      A invenção do transistor em 1947 revolucionou eletrônica, permitindo a miniaturização e eficiência dos dispositivos.
+      A partir daí, circuitos integrados surgiram na década de 1960, possibilitando a construção dos modernos computadores e dispositivos móveis.
+    </p>
+  </section>
+
+  <section class="content" id="tab7" role="tabpanel" hidden>
+    <h2>História do Sistema Operacional Windows</h2>
+    <p>
+      Criado pela Microsoft, o Windows foi lançado em 1985 como uma interface gráfica para o MS-DOS, facilitando o uso de computadores pessoais.
+      Suas versões evoluíram ao longo dos anos, do Windows 3.1, 95, XP, até o Windows 10 e 11 atuais, tornando-se um sistema dominante no mercado de PCs.
+      O Windows trouxe interfaces amigáveis, suporte a multimídia e integração com redes globais.
+    </p>
+  </section>
+
+  <section class="content" id="tab8" role="tabpanel" hidden>
+    <h2>História das empresas Apple e Microsoft</h2>
+    <p>
+      Apple e Microsoft são duas gigantes da tecnologia que influenciaram profundamente a computação pessoal.
+      A Apple, fundada em 1976, popularizou o computador pessoal com o Apple II e depois o Macintosh, focando no design e inovação.
+      Microsoft, também criada em 1975, tornou-se líder com seu sistema operacional Windows e software como Office.
+      Ambas as empresas continuam em competição e colaboração, moldando a indústria de tecnologia.
+    </p>
+  </section>
+</main>
+
+<script>
+  const buttons = document.querySelectorAll('nav button');
+  const tabs = document.querySelectorAll('section.content');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('aria-controls');
+
+      // atualiza visibilidade das abas
+      tabs.forEach(tab => {
+        tab.hidden = tab.id !== targetId;
+      });
+
+      // atualiza botão ativo
+      buttons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+  });
+</script>
+
 </body>
 </html>
